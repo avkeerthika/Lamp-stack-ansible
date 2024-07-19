@@ -1,0 +1,13 @@
+---
+# defaults file for lamp-stack
+package: 
+  - httpd
+  - mysql-server
+  - phpmyadmin
+
+service:
+  - httpd
+  - mysqld
+php_access: local
+config_repo: false
+config_phpmyadmin: false

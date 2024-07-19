@@ -1,0 +1,5 @@
+# requirements.yml
+- name: lamp-stack
+  src: https://github.com/username/role1.git
+  version: master
+

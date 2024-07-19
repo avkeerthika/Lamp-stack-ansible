@@ -1,0 +1,41 @@
+---
+# LAMP configuration
+- name: config epel
+  # command: subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+  command: 
+    cmd: dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+  when: config_repo == true
+- name: Installing required package
+  package:
+    name: "{{ package }}"
+    state: latest
+
+- name: firewall config
+  firewalld:
+    port: 80/tcp
+    state: enabled
+    permanent: yes
+  notify: restart firewall
+
+
+  #template:
+    #src: phpMyAdmin.conf
+      #dest: /etc/httpd/conf.d/phpMyAdmin.conf
+      #owner: root
+      #group: root
+      # mode: '0644'
+      #when: config_phpmyadmin == true
+
+- name: config php page
+  replace:
+    path: /etc/httpd/conf.d/phpMyAdmin.conf
+    regexp: 'local'
+    replace: 'all granted'
+
+- name: restart service
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  loop: "{{ service }}"
+

@@ -1,0 +1,10 @@
+---
+- name: lamp stack configuration
+  hosts: all
+  become: true
+  vars:
+    config_repo: true
+    config_phpmyadmin: false
+      #php_access: all granted
+  roles: 
+      - role: lamp-stack
